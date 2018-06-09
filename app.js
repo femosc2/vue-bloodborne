@@ -13,12 +13,15 @@ new Vue({
         combatLog: [],
         bloodStoneShard: false,
         bloodStoneChunk: false,
-        bloodRock: false
+        bloodRock: false,
+        splashImage: true,
+        name: null
     },
     methods: {
         startGame() {
             this.gameIsRunning = true;
             this.combatLog = [];
+            console.log(this.name);
             if (this.huntersGarb === true) {
                 this.playerHealth = 120;
         }   else if (this.cainhurstSet === true) {

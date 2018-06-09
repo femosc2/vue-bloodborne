@@ -2,6 +2,23 @@
     text-align: center;
 }
 
+.center {
+    margin: 0 auto;
+    position: fixed;
+    width: 75%;
+    position: fixed;
+    left: 50%;
+    margin-left: -37.5%;
+}
+
+.splashH1 {
+    color: #ff0000;
+}
+
+#pressEnter {
+    margin-top: 5%;
+}
+
 #app {
     animation: fadeIn 1s 1;
 }
@@ -109,11 +126,20 @@ button {
     background-color: #c7c7c7;
 }
 
+.splash {
+    position: fixed;
+    background-image: url("Bloodborne.jpg"); 
+    z-index: 500;
+    animation: fadeIn 0.5s 1;
+    width: 100%;
+    height: 100%;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
     }
-    100 % {
+    100% {
         opacity: 1;
     }
 }
