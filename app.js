@@ -15,20 +15,33 @@ new Vue({
         bloodStoneChunk: false,
         bloodRock: false,
         splashImage: true,
-        name: null
+        name: null,
+        vialHeal: 40,
+        playerAttack: 62
     },
     methods: {
         startGame() {
             this.gameIsRunning = true;
             this.combatLog = [];
-            console.log(this.name);
             if (this.huntersGarb === true) {
                 this.playerHealth = 120;
-        }   else if (this.cainhurstSet === true) {
+                this.vialHeal = this.playerHealth*0.4;
+            }   else if (this.cainhurstSet === true) {
                 this.playerHealth = 150;
-        }   else {
+                this.vialHeal = this.playerHealth*0.4;
+            }   else {
                 this.playerHealth = 100;
-        }
+                vialHeal = 40;
+            }
+            if (this.bloodStoneShard === true) {
+                    this.playerAttack = 74;
+            } else if (this.bloodStoneChunk === true) {
+                    this.playerAttack = 87;
+            } else if (this.bloodRock === true) {
+                    this.playerAttack = 105;
+            } else {
+                    this.playerAttack = 62;
+            }
             if (this.preySlaughtered >= 10){
                 this.preyHealth = 750;
             } else {
@@ -38,25 +51,11 @@ new Vue({
         attack() {
             gitGudRating = Math.floor(Math.random() * 101);
             if (gitGudRating > 40){
-                if (this.bloodStoneShard === true){
-                    playerAttack = Math.floor(Math.random() * (62*1.2));
-                    this.preyHealth = this.preyHealth - playerAttack;
-                    this.combatLog.unshift("The hunter attacked the prey for" + " " + playerAttack + " " + "damage!");
-                }else if (this.bloodStoneChunk === true) {
-                    playerAttack = Math.floor(Math.random() * (62*1.4) );
-                    this.preyHealth = this.preyHealth - playerAttack;
-                    this.combatLog.unshift("The hunter attacked the prey for" + " " + playerAttack + " " + "damage!");
-                } else if (this.bloodRock === true) {
-                    playerAttack = Math.floor(Math.random() * (62*1.7));
-                    this.preyHealth = this.preyHealth - playerAttack;
-                    this.combatLog.unshift("The hunter attacked the prey for" + " " + playerAttack + " " + "damage!");
-                } else {
-                    playerAttack = Math.floor(Math.random() * 61);
-                    this.preyHealth = this.preyHealth - playerAttack;
-                    this.combatLog.unshift("The hunter attacked the prey for" + " " + playerAttack + " " + "damage!");
-                }
+                turnAttack = Math.floor(Math.random() * this.playerAttack);
+                this.preyHealth = this.preyHealth - turnAttack;
+                this.combatLog.unshift("The hunter attacked the prey for" + " " + turnAttack + " " + "damage!");
             } else {
-                beastAttack = Math.floor(Math.random() * 61);
+                beastAttack = Math.floor(Math.random() * 50);
                 this.playerHealth = this.playerHealth - beastAttack;
                 this.combatLog.unshift("The beast attacked the hunter for" + " " + beastAttack + " " + "damage!");
                 }
@@ -65,7 +64,11 @@ new Vue({
                     alert("PREY SLAUGHTERED");
                     this.preyHealth = 0;                    
                     this.gameIsRunning = false;
-                    this.echoes = this.echoes + 5000;
+                    if (this.preySlaughtered >= 10){
+                        this.echoes = this.echoes + 7500;
+                        } else {
+                            this.echoes = this.echoes + 5000;
+                        }
                     this.preySlaughtered++;
             }       
         },
@@ -86,7 +89,11 @@ new Vue({
                     alert("PREY SLAUGHTERED");
                     this.preyHealth = 0;                    
                     this.gameIsRunning = false;
-                    this.echoes = this.echoes + 5000;
+                    if (this.preySlaughtered >= 10){
+                    this.echoes = this.echoes + 7500;
+                    } else {
+                        this.echoes = this.echoes + 5000;
+                    }
                     this.preySlaughtered++;
                 }    
             }
@@ -97,16 +104,16 @@ new Vue({
                 this.playerHealth = this.playerHealth - 30;
                 //
             } else {
+                this.playerHealth = this.playerHealth + this.vialHeal;
                 this.playerVials--;
-                this.playerHealth = this.playerHealth + 40;
                 if (this.playerHealth > 100 && this.huntersGarb === false && this.cainhurstSet === false) {
-                    this.playerHealth = 100
-            }   else if (this.playerHealth > 120 && this.huntersGarb === true) {
+                    this.playerHealth = 100;
+                }   else if (this.playerHealth > 120 && this.huntersGarb === true) {
                     this.playerHealth = 120;
-            }   else if (this.playerHealth > 150 && this.cainhurstSet === true) {
+                }   else if (this.playerHealth > 150 && this.cainhurstSet === true) {
                     this.playerHealth = 150;
+                    }   
                 }
-            }
         },
         huntersMark() {
             this.gameIsRunning = false;
@@ -131,25 +138,25 @@ new Vue({
         buyHuntersGarb() {
             if (this.cainhurstSet === true && this.huntersGarb === false){
                 alert("You already have the Cainhurst or the Hunters Garb")
-            } else if (this.echoes < 20000){
+            } else if (this.echoes < 3000){
                 alert("You do not have enough echoes!")
             }
              else {
                 this.huntersGarb = true;
                 this.playerHealth = 120;
-                this.echoes = this.echoes - 5000;
+                this.echoes = this.echoes - 3000;
             }
         },
         buyCainhurstSet() {
             if (this.cainhurstSet === true && this.huntersGarb === false){
                 alert("You already have the Cainhurst set!")
-            } else if (this.echoes < 50000) {
+            } else if (this.echoes < 8000) {
                 alert("You do not have enough echoes!")
             } else {
             this.huntersGarb = false;
             this.cainhurstSet= true;
             this.playerHealth = 150;
-            this.echoes = this.echoes - 11000;
+            this.echoes = this.echoes - 8000;
         }
     },
     buyBloodStoneShard() {
@@ -167,25 +174,25 @@ new Vue({
     buyBloodStoneChunk() {
         if (this.bloodStoneChunk === true || this.bloodRock === true){
             alert("You already have a better weapon!")
-        } else if (this.echoes < 5000) {
+        } else if (this.echoes < 6000) {
             alert("You do not have enough echoes!")
         } else {
         this.bloodStoneChunk = true;
         this.bloodStoneRock= false;
         this.bloodStoneShard = false;
-        this.echoes = this.echoes - 5000;
+        this.echoes = this.echoes - 6000;
     }
     },
     buyBloodRock() {
         if (this.bloodRock === true){
             alert("You already have a better weapon!")
-        } else if (this.echoes < 8000) {
+        } else if (this.echoes < 10000) {
             alert("You do not have enough echoes!")
         } else {
         this.bloodStoneChunk = false;
         this.bloodRock= true;
         this.bloodStoneShard = false;
-        this.echoes = this.echoes - 8000;
+        this.echoes = this.echoes - 10000;
     }
     },
 

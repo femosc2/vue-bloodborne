@@ -7,84 +7,99 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-<div id="app" class="fadeIn">
-    <div class="splash" v-if="splashImage" v-on:keyup.enter="splashImage = !splashImage">
-        <h1 class="text-center splashH1">What's your name?</h1>
-        <input class="text-center center" type="text" name="userName" maxlength="10" v-model="name" v-on:keydown.enter="splashImage = !splashImage"></input>
-        <p><h1 id="pressEnter" class="text-center splashH1">PRESS ENTER TO PLAY</h1></p>
-   </div>
-    <section class="row">
-        <div class="small-6 columns" v-if="!splashImage">
-            <h1 class="text-center" v-if="name == null"> Hunter</h1>
-            <h1 class="text-center" v-else> {{ name }}</h1>
-            <div class="healthbar">
-                <div 
-                class="healthbar text-center" 
-                style="background-color: green; margin: 0; color: white;"
-                :style="{width: playerHealth + '%'}">
-                    {{ playerHealth }}
-                </div>
-            </div>
-            <h4 class="text-center">Blood Vials: {{ playerVials }} / 20</h1>
-            <h4 class="text-center">Quicksilver Bullets: {{ playerBullets }} / 20</h1>
-            <h4 class="text-center">Blood Echoes: {{ echoes }}</h1>
+    <div id="app" class="fadeIn">
+        <div class="splash" v-if="splashImage">
+            <section id="splashSection">
+            <h1 class="text-center splashH1">What's your name?</h1>
+            <input class="text-center center" type="text" name="userName" maxlength="10" v-model="name" v-on:keydown.enter="splashImage = !splashImage">
+            <p><h1 id="pressEnter" class="text-center splashH1">PRESS ENTER TO PLAY</h1></p>
+            </section>
         </div>
-        <div class="small-6 columns" v-if="!splashImage">
-            <h1 class="text-center">Prey</h1>
-            <div class="healthbarMonster">
-                <div 
-                class="healthbar text-center" 
-                style="background-color: green; margin: 0; color: white;"
-                :style="{width: preyHealth/5 + '%'}">
-                    {{ preyHealth }}
+        <section class="row">
+            <transition name="fadeIn">
+            <div class="small-6 columns" v-if="!splashImage">
+                <h1 class="text-center" v-if="name == null"> Hunter</h1>
+                <h1 class="text-center" v-else> {{ name }}</h1>
+                <div class="healthbar">
+                    <div 
+                    class="healthbar text-center" 
+                    style="background-color: green; margin: 0; color: white;"
+                    :style="{width: playerHealth + '%'}">
+                        {{ playerHealth }}
+                    </div>
                 </div>
-                <h4 class="text-center">Prey Slaughtered: {{ preySlaughtered }}</h4>
-                <h4 class="text-center" v-if="cainhurstSet">Cainhurst Set +50 hp</h4>
-                <h4 class="text-center" v-else-if="huntersGarb">Hunters Garb +20 hp</h4>
-                <h4 class="text-center" v-else-if="huntersGarb">Hunters Garb +20 hp</h4>
-                <h4 class="text-center" v-else>Foreign Set No bonuses</h4>
-                <h4 class="text-center" v-if="bloodStoneShard"> +2 Weapon 1.2 Attack Multiplier</h4>
-                <h4 class="text-center" v-else-if="bloodStoneChunk"> +6 Weapon 1.4 Attack Multiplier</h4>
-                <h4 class="text-center" v-else-if="bloodRock"> +10 Weapon 1.7 Attack Multiplier</h4>
-                <h4 class="text-center" v-else> +0 Weapon No Attack Multiplier</h4>
+                <h4 class="text-center">Blood Vials: {{ playerVials }} / 20</h4>
+                <h4 class="text-center">Quicksilver Bullets: {{ playerBullets }} / 20</h4>
+                <h4 class="text-center">Blood Echoes: {{ echoes }}</h4>
             </div>
-        </div>
-    </section>
-    <section class="row controls" v-if="!gameIsRunning">
-        <div class="small-12 columns" v-if="!splashImage">
-            <h2 class="text-center">Consumables</h2>
-            <button class="store-button" @click="buyVial"> Blood Vial 500 blood echoes.</button>
-            <button class="store-button" @click="buyBullet">Quicksilver Bullet 250 blood echoes.</button>
-            <hr>
-            <h2 class="text-center">Equipment</h2>
-            <button class="store-button" @click="buyHuntersGarb">Hunters Garb. Increases your max HP. 5000 blood echoes</button>
-            <button class="store-button" @click="buyCainhurstSet">Cainhurst Set. Increases your max HP even further. 11000 blood echoes.</button>
-            <button class="store-button" @click="buyBloodStoneShard">Blood Stone Shard. Increases your damage a minor amount.</button>
-            <button class="store-button" @click="buyBloodStoneChunk">Blood Stone Chunk. Increases your damage a moderate amount.</button>
-            <button class="store-button" @click="buyBloodRock">Blood Rock. Increases your damage a large amount.</button>
+        </transition>
 
-            <hr>
-            <button id="start-game" @click="startGame">Enter Nightmare Fog</button>
-        </div>
-    </section>
-    <section class="row controls" v-else>
-        <div class="small-12 columns" v-if="!splashImage">
-            <button id="attack" @click="attack">Attack</button>
-            <button id="special-attack" @click="visceral">Visceral</button>
-            <button id="heal" @click="bloodVial">Blood Vial</button>
-            <button id="give-up" @click="huntersMark">Hunters Mark</button>
-        </div>
-    </section>
-    
-    <section class="row log" v-if="!splashImage">
-        <div class="small-12 columns">
-            <ul v-for="action in combatLog">
-                <li>
-                    <div>{{ action }}</div>
-                </li>
-            </ul>
-        </div>
-    </section>
+            <transition name="fadeIn">
+            <div class="small-6 columns" v-if="!splashImage">
+                <h1 class="text-center">Prey</h1>
+                <div class="healthbarMonster">
+                    <div 
+                    class="healthbar text-center" 
+                    style="background-color: green; margin: 0; color: white;"
+                    :style="{width: preyHealth/5 + '%'}">
+                        {{ preyHealth }}
+                    </div>
+                    <h4 class="text-center">Prey Slaughtered: {{ preySlaughtered }}</h4>
+                    <h4 class="text-center" v-if="cainhurstSet">Cainhurst Set +50 hp</h4>
+                    <h4 class="text-center" v-else-if="huntersGarb">Hunters Garb +20 hp</h4>
+                    <h4 class="text-center" v-else-if="huntersGarb">Hunters Garb +20 hp</h4>
+                    <h4 class="text-center" v-else>Foreign Set No bonuses</h4>
+                    <h4 class="text-center" v-if="bloodStoneShard"> +2 Weapon 1.2 Attack Multiplier</h4>
+                    <h4 class="text-center" v-else-if="bloodStoneChunk"> +6 Weapon 1.4 Attack Multiplier</h4>
+                    <h4 class="text-center" v-else-if="bloodRock"> +10 Weapon 1.7 Attack Multiplier</h4>
+                    <h4 class="text-center" v-else> +0 Weapon No Attack Multiplier</h4>
+                </div>
+            </div>
+        </transition>
+        </section>
+
+        <section class="row controls" v-if="!gameIsRunning">
+            <transition name="fadeIn">
+            <div class="small-12 columns" v-if="!splashImage">
+                <h2 class="text-center">Consumables</h2>
+                <button class="store-button" @click="buyVial"> Blood Vial 500 blood echoes.</button>
+                <button class="store-button" @click="buyBullet">Quicksilver Bullet 250 blood echoes.</button>
+                <hr>
+                <h2 class="text-center">Equipment</h2>
+                <button class="store-button" @click="buyHuntersGarb">Hunters Garb. Increases your max HP. 3000 blood echoes</button>
+                <button class="store-button" @click="buyCainhurstSet">Cainhurst Set. Increases your max HP even further. 8000 blood echoes.</button>
+                <button class="store-button" @click="buyBloodStoneShard">Blood Stone Shard. Increases your damage a minor amount. 3000 echoes.</button>
+                <button class="store-button" @click="buyBloodStoneChunk">Blood Stone Chunk. Increases your damage a moderate amount. 6000 echoes.</button>
+                <button class="store-button" @click="buyBloodRock">Blood Rock. Increases your damage a large amount. 10000 echoes.</button>
+
+                <hr>
+                <button id="start-game" @click="startGame">Enter Nightmare Fog</button>
+            </div>
+        </transition>
+        </section>
+
+        <section class="row controls" v-else>
+            <transition name="fadeIn">
+            <div class="small-12 columns" v-if="!splashImage">
+                <button id="attack" @click="attack">Attack</button>
+                <button id="special-attack" @click="visceral">Visceral</button>
+                <button id="heal" @click="bloodVial">Blood Vial</button>
+                <button id="give-up" @click="huntersMark">Hunters Mark</button>
+            </div>
+        </transition>
+        </section>
+        
+    <transition name="fadeIn">
+        <section class="row log" v-if="!splashImage">
+            <div class="small-12 columns">
+                <ul v-for="action in combatLog">
+                    <li>
+                        <div>{{ action }}</div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </transition>
 </div>
     <script src="app.js"></script>
 </body>
