@@ -7,7 +7,7 @@ new Vue({
         playerBullets: 20,
         gameIsRunning: false,
         preySlaughtered: 0,
-        echoes: 50000,
+        echoes: 0,
         huntersGarb: false,
         cainhurstSet: false,
         combatLog: [],
@@ -52,7 +52,7 @@ new Vue({
         },
         attack() {
             gitGudRating = Math.floor(Math.random() * 101);
-            if (gitGudRating > 40){
+            if (gitGudRating >= 50){
                 turnAttack = Math.floor(Math.random() * this.playerAttack);
                 this.preyHealth = this.preyHealth - turnAttack;
                 this.combatLog.unshift("The hunter attacked the prey for" + " " + turnAttack + " " + "damage!");

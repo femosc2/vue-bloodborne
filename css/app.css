@@ -1,5 +1,6 @@
 * {
-  animation: fadeIn 0.5s 1;  
+  animation: fadeIn 0.5s 1;
+  color: #fff;
 }
 
 body {
@@ -18,6 +19,10 @@ h4 {
     color: #fff;
 }
 
+h2 {
+    color: #fff;
+}
+
 .center {
     margin: 0 auto;
     position: fixed;
@@ -26,6 +31,7 @@ h4 {
     left: 50%;
     margin-left: -37.5%;
 }
+
 
 .youDiedH1 {
     z-index: 999;
@@ -90,54 +96,16 @@ h4 {
 
 button {
     font-size: 20px;
-    background-color: #eee;
+    background-color: #7a0909;
     padding: 12px;
     box-shadow: 0 1px 1px black;
     margin: 10px;
+    color: #fff;
 }
 
-#start-game {
-    background-color: #aaffb0;
-}
-
-.store-button {
-    background-color: #aaffb0;
-}
-
-#start-game:hover {
-    background-color: #76ff7e;
-}
-
-#attack {
-    background-color: #ff7367;
-}
-
-#attack:hover {
-    background-color: #ff3f43;
-}
-
-#special-attack {
-    background-color: #ffaf4f;
-}
-
-#special-attack:hover {
-    background-color: #ff9a2b;
-}
-
-#heal {
-    background-color: #aaffb0;
-}
-
-#heal:hover {
-    background-color: #76ff7e;
-}
-
-#give-up {
-    background-color: #ffffff;
-}
-
-#give-up:hover {
-    background-color: #c7c7c7;
+button:hover {
+    background-color: #ff0000;
+    transition: 1s;
 }
 
 .splash {
