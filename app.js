@@ -17,12 +17,14 @@ new Vue({
         splashImage: true,
         name: null,
         vialHeal: 40,
-        playerAttack: 62
+        playerAttack: 62,
+        gitGud: false
     },
     methods: {
         startGame() {
             this.gameIsRunning = true;
             this.combatLog = [];
+            this.gitGud = false;
             if (this.huntersGarb === true) {
                 this.playerHealth = 120;
                 this.vialHeal = this.playerHealth*0.4;
@@ -58,18 +60,13 @@ new Vue({
                 beastAttack = Math.floor(Math.random() * 50);
                 this.playerHealth = this.playerHealth - beastAttack;
                 this.combatLog.unshift("The beast attacked the hunter for" + " " + beastAttack + " " + "damage!");
+                if (this.playerHealth <= 0) {
+                    this.youDied();  
+                }
                 }
 
             if (this.preyHealth <= 0) {
-                    alert("PREY SLAUGHTERED");
-                    this.preyHealth = 0;                    
-                    this.gameIsRunning = false;
-                    if (this.preySlaughtered >= 10){
-                        this.echoes = this.echoes + 7500;
-                        } else {
-                            this.echoes = this.echoes + 5000;
-                        }
-                    this.preySlaughtered++;
+                this.preyDead();
             }       
         },
         visceral() {
@@ -84,17 +81,12 @@ new Vue({
                     this.preyHealth = this.preyHealth - 200;
                 } else {
                     this.playerHealth = this.playerHealth - 50;
+                    if (this.playerHealth <= 0) {
+                        this.youDied();                  
+                    }
                 }    
                 if (this.preyHealth <= 0) {
-                    alert("PREY SLAUGHTERED");
-                    this.preyHealth = 0;                    
-                    this.gameIsRunning = false;
-                    if (this.preySlaughtered >= 10){
-                    this.echoes = this.echoes + 7500;
-                    } else {
-                        this.echoes = this.echoes + 5000;
-                    }
-                    this.preySlaughtered++;
+                    this.preyDead();
                 }    
             }
         },
@@ -117,13 +109,13 @@ new Vue({
         },
         huntersMark() {
             this.gameIsRunning = false;
-            this.echoes = 0;
+            this.echoes = this.echoes/2;
         },
         buyVial() {
             if (this.echoes >= 500 && this.playerVials < 20){
-                this.playerVials++
+                this.playerVials++;
                 this.echoes = this.echoes - 500;
-            } else {
+            }   else {
                 alert("You do not have enough blood echoes or you already have 20 vials!")
             }  
         },
@@ -131,17 +123,17 @@ new Vue({
             if (this.echoes >= 250 && this.playerBullets < 20){
                 this.playerBullets++
                 this.echoes = this.echoes - 250;
-            } else {
+            }   else {
                 alert("You do not have enough blood echoes or you already have 20 bullets!")
             }  
         }, 
         buyHuntersGarb() {
             if (this.cainhurstSet === true && this.huntersGarb === false){
-                alert("You already have the Cainhurst or the Hunters Garb")
-            } else if (this.echoes < 3000){
-                alert("You do not have enough echoes!")
+                alert("You already have the Cainhurst or the Hunters Garb");
+            }   else if (this.echoes < 3000){
+                alert("You do not have enough echoes!");
             }
-             else {
+                else {
                 this.huntersGarb = true;
                 this.playerHealth = 120;
                 this.echoes = this.echoes - 3000;
@@ -150,9 +142,9 @@ new Vue({
         buyCainhurstSet() {
             if (this.cainhurstSet === true && this.huntersGarb === false){
                 alert("You already have the Cainhurst set!")
-            } else if (this.echoes < 8000) {
+            }   else if (this.echoes < 8000) {
                 alert("You do not have enough echoes!")
-            } else {
+            }   else {
             this.huntersGarb = false;
             this.cainhurstSet= true;
             this.playerHealth = 150;
@@ -195,6 +187,31 @@ new Vue({
         this.echoes = this.echoes - 10000;
     }
     },
+    youDied() {
+        this.gitGud = true;
+        this.gameIsRunning = false;
+        this.echoes = 0;
+        this.huntersGarb = false;
+        this.cainhurstSet = false;
+        this.bloodStoneShard = false;
+        this.bloodStoneChunk = false;
+        this.bloodRock = false;
+        this.splashImage = true;
+        this.playerHealth = 100;
+        this.preyHealth = 500;
+        this.preySlaughtered = 0;
+    },
+    preyDead() {
+        alert("PREY SLAUGHTERED");
+        this.preyHealth = 0;                    
+        this.gameIsRunning = false;
+        if (this.preySlaughtered >= 10){
+            this.echoes = this.echoes + 7500;
+            } else {
+                this.echoes = this.echoes + 5000;
+            }
+        this.preySlaughtered++;
+    }
 
 }
 

@@ -9,10 +9,11 @@
 <body>
     <div id="app" class="fadeIn">
         <div class="splash" v-if="splashImage">
+            <h1 class="text-center youDiedH1" v-if="gitGud">YOU DIED</h1>
             <section id="splashSection">
             <h1 class="text-center splashH1">What's your name?</h1>
             <input class="text-center center" type="text" name="userName" maxlength="10" v-model="name" v-on:keydown.enter="splashImage = !splashImage">
-            <p><h1 id="pressEnter" class="text-center splashH1">PRESS ENTER TO PLAY</h1></p>
+            <p><h1 class="text-center splashH1 pressEnter">PRESS ENTER TO PLAY</h1></p>
             </section>
         </div>
         <section class="row">

@@ -2,8 +2,20 @@
   animation: fadeIn 0.5s 1;  
 }
 
+body {
+    background-color: #282828;
+}
+
 .text-center {
     text-align: center;
+}
+
+h1 {
+    color: #fff;
+}
+
+h4 {
+    color: #fff;
 }
 
 .center {
@@ -15,12 +27,17 @@
     margin-left: -37.5%;
 }
 
+.youDiedH1 {
+    z-index: 999;
+    color: #ff0000;
+}
+
 .splashH1 {
     color: #ff0000;
 }
 
-#pressEnter {
-    margin-top: 5%;
+.pressEnter {
+    margin-top: 8%;
 }
 
 #app {
@@ -30,7 +47,7 @@
 .healthbar {
     width: 50%;
     height: 40px;
-    background-color: #eee;
+    background-color: #3c3c3c;
     margin: auto;
     transition: width 500ms;
 }
@@ -38,7 +55,7 @@
 .healthbarMonster {
     width: 100%;
     height: 40px;
-    background-color: #eee;
+    background-color: #3c3c3c;
     margin: auto;
     transition: width 500ms;
 }
